@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,26 +23,40 @@
         }
         
         @keyframes pulse-glow {
-            0% {
-                box-shadow: 0 0 10px rgba(249, 115, 22, 0.2), inset 0 0 5px rgba(249, 115, 22, 0.1);
-            }
-            100% {
-                box-shadow: 0 0 30px rgba(249, 115, 22, 0.7), inset 0 0 15px rgba(249, 115, 22, 0.3);
-            }
+            0% { box-shadow: 0 0 10px rgba(249, 115, 22, 0.2), inset 0 0 5px rgba(249, 115, 22, 0.1); }
+            100% { box-shadow: 0 0 30px rgba(249, 115, 22, 0.7), inset 0 0 15px rgba(249, 115, 22, 0.3); }
         }
 
         .logo-container img { max-width: 250px; height: auto; position: relative; z-index: 2; }
         
         h1 { font-size: 1.6rem; margin-bottom: 5px; color: #fff; text-align: center; }
         p.subtitle { text-align: center; color: #94a3b8; font-size: 0.9rem; margin-bottom: 25px; }
+        
+        /* Botões */
+        button { width: 100%; color: #fff; border: none; padding: 14px; font-weight: bold; border-radius: 6px; margin-top: 25px; cursor: pointer; transition: 0.3s; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-submit { background: var(--primary); }
+        .btn-submit:hover { background: #ea580c; transform: translateY(-2px); }
+        .btn-regras { background: transparent; border: 2px solid var(--primary); color: var(--primary); margin-top: 0; margin-bottom: 25px; }
+        .btn-regras:hover { background: var(--primary); color: #fff; }
+        
+        /* Formulário */
         label { display: block; margin-top: 15px; font-weight: 600; font-size: 0.9rem; color: #cbd5e1; }
         input, select { width: 100%; padding: 12px; margin-top: 6px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box; font-size: 0.95rem; outline: none; }
         input:focus, select:focus { border-color: var(--primary); }
-        button { width: 100%; background: var(--primary); color: #fff; border: none; padding: 14px; font-weight: bold; border-radius: 6px; margin-top: 25px; cursor: pointer; transition: 0.3s; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; }
-        button:hover { background: #ea580c; transform: translateY(-2px); }
+        
         .admin-section { margin-top: 40px; padding-top: 20px; border-top: 1px dashed #334155; }
         .btn-export { background: #10b981; }
         .btn-export:hover { background: #059669; }
+
+        /* Modal (Segunda Página) */
+        .modal { display: none; position: fixed; z-index: 10; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
+        .modal-content { background-color: var(--card); margin: 5% auto; padding: 30px; border: 1px solid #334155; border-radius: 12px; width: 90%; max-width: 600px; max-height: 80vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        .modal-title { color: var(--primary); border-bottom: 1px solid #334155; padding-bottom: 10px; margin-top: 0; }
+        .close-btn { background: #ef4444; margin-top: 20px; }
+        .close-btn:hover { background: #dc2626; }
+        .regras-texto h3 { color: #fff; margin-top: 20px; font-size: 1.1rem; }
+        .regras-texto p, .regras-texto ul { color: #cbd5e1; font-size: 0.95rem; line-height: 1.5; }
+        .regras-texto li { margin-bottom: 8px; }
     </style>
 </head>
 <body>
@@ -55,11 +69,14 @@
         <h1>HACKATHON DE TI 2026/2</h1>
         <p class="subtitle">Projeto de Extensão — Faculdade Anhanguera Osasco</p>
         
+        <!-- Botão para abrir as regras -->
+        <button type="button" class="btn-regras" onclick="abrirModal()">Ver Regras e Orientações</button>
+        
         <form id="formInscricao">
             <label for="nome">Nome Completo:</label>
-            <input type="text" id="nome" required placeholder="Introduza o nome completo">
+            <input type="text" id="nome" required placeholder="Digite o nome completo">
 
-            <label for="ra">RA (Registo Académico):</label>
+            <label for="ra">RA (Registro Acadêmico):</label>
             <input type="text" id="ra" required placeholder="Ex: 12345678">
 
             <label for="curso">Curso:</label>
@@ -83,7 +100,7 @@
             <label for="parceiro">Instituição / Comunidade Parceira Atendida:</label>
             <input type="text" id="parceiro" required placeholder="Nome da ONG, Escola Pública ou Associação">
 
-            <button type="submit">Enviar Inscrição</button>
+            <button type="submit" class="btn-submit">Enviar Inscrição</button>
         </form>
 
         <div class="admin-section">
@@ -92,12 +109,63 @@
         </div>
     </div>
 
+    <!-- Janela Modal das Regras (Segunda Página) -->
+    <div id="modalRegras" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-title">Orientações do Hackathon</h2>
+            <div class="regras-texto">
+                <h3>1. Sobre o Projeto</h3>
+                <p>O Hackathon é um projeto de extensão focado em conectar os alunos de TI (ADS, SI e GTI) às demandas reais da comunidade, utilizando a tecnologia para impacto social.</p>
+                
+                <h3>2. Metodologia (Ciclo PDCA)</h3>
+                <p>Todas as soluções devem ser documentadas seguindo o ciclo PDCA:</p>
+                <ul>
+                    <li><strong>Plan (Planejar):</strong> Identificar o problema da comunidade e planejar a solução tecnológica.</li>
+                    <li><strong>Do (Fazer):</strong> Desenvolver o protótipo ou aplicação.</li>
+                    <li><strong>Check (Checar):</strong> Validar a solução com a instituição parceira.</li>
+                    <li><strong>Act (Agir):</strong> Realizar ajustes finais e documentar os resultados.</li>
+                </ul>
+
+                <h3>3. Eixos Temáticos (ODS da ONU)</h3>
+                <ul>
+                    <li><strong>ODS 4:</strong> Educação de Qualidade (Sistemas para escolas, inclusão digital).</li>
+                    <li><strong>ODS 8:</strong> Trabalho Decente e Crescimento Econômico (Softwares para pequenos comércios/ONGs).</li>
+                    <li><strong>ODS 9:</strong> Indústria, Inovação e Infraestrutura (Serviços urbanos).</li>
+                    <li><strong>ODS 11:</strong> Cidades e Comunidades Sustentáveis (Mobilidade, gestão de resíduos).</li>
+                    <li><strong>ODS 12:</strong> Consumo e Produção Responsáveis (Combate ao desperdício).</li>
+                </ul>
+
+                <h3>4. Avaliação e Critérios</h3>
+                <p>Os projetos serão avaliados pela banca com base na <strong>Inovação</strong>, <strong>Impacto Social na Comunidade Atendida</strong>, <strong>Aplicabilidade Prática (Funcionalidade)</strong> e correta documentação do <strong>Ciclo PDCA</strong>.</p>
+            </div>
+            <button class="close-btn" onclick="fecharModal()">Fechar Regras</button>
+        </div>
+    </div>
+
     <script>
+        // Lógica do Modal (Regras)
+        const modal = document.getElementById("modalRegras");
+        
+        function abrirModal() {
+            modal.style.display = "block";
+        }
+        
+        function fecharModal() {
+            modal.style.display = "none";
+        }
+
+        // Fechar modal ao clicar fora dele
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                fecharModal();
+            }
+        }
+
         // Guardar Inscrição na Base de Dados Local (LocalStorage)
         document.getElementById('formInscricao').addEventListener('submit', function(e) {
             e.preventDefault();
             const novaInscricao = {
-                data: new Date().toLocaleString('pt-PT'),
+                data: new Date().toLocaleString('pt-BR'),
                 nome: document.getElementById('nome').value,
                 ra: document.getElementById('ra').value,
                 curso: document.getElementById('curso').value,
@@ -115,7 +183,7 @@
 
         // Exportar Base de Dados para TXT com Proteção de Senha
         function exportarTXT() {
-            const senha = prompt("Introduza a senha de administrador para aceder ao relatório:");
+            const senha = prompt("Introduza a senha de administrador para acessar o relatório:");
             
             // Senha de administrador
             if (senha !== "professor2026") {
@@ -130,10 +198,10 @@
             }
 
             let conteudoTXT = "=== BASE DE INSCRIÇÕES HACKATHON DE TI ===\n";
-            conteudoTXT += `Gerado em: ${new Date().toLocaleString('pt-PT')}\n\n`;
+            conteudoTXT += `Gerado em: ${new Date().toLocaleString('pt-BR')}\n\n`;
 
             inscricoes.forEach((item, index) => {
-                conteudoTXT += `--- REGISTO #${index + 1} ---\n`;
+                conteudoTXT += `--- REGISTRO #${index + 1} ---\n`;
                 conteudoTXT += `Data/Hora: ${item.data}\n`;
                 conteudoTXT += `Nome: ${item.nome}\n`;
                 conteudoTXT += `RA: ${item.ra}\n`;
