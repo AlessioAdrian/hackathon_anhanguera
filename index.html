@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscrição Hackathon TI — Anhanguera</title>
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhhY2thdGhvbiBUSSBBbmhhbmd1ZXJhIiwKICAic2hvcnRfbmFtZSI6ICJIYWNrYXRob25USSIsCiAgInN0YXJ0X3VybCI6ICIuIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMGYxNzJhIiwKICAidGhlbWVfY29sb3IiOiAiI2Y5NzMxNiIKfQ==">
+    <style>
+        :root { --primary: #f97316; --bg: #0f172a; --card: #1e293b; --text: #f8fafc; }
+        body { font-family: 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+        .container { max-width: 650px; margin: 0 auto; background: var(--card); padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border-top: 5px solid var(--primary); }
+        h1 { font-size: 1.6rem; margin-bottom: 5px; color: #fff; text-align: center; }
+        p.subtitle { text-align: center; color: #94a3b8; font-size: 0.9rem; margin-bottom: 25px; }
+        label { display: block; margin-top: 15px; font-weight: 600; font-size: 0.9rem; color: #cbd5e1; }
+        input, select, textarea { width: 100%; padding: 12px; margin-top: 6px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box; font-size: 0.95rem; }
+        button { width: 100%; background: var(--primary); color: #fff; border: none; padding: 14px; font-weight: bold; border-radius: 6px; margin-top: 25px; cursor: pointer; transition: 0.3s; font-size: 1rem; }
+        button:hover { background: #ea580c; }
+        .admin-section { margin-top: 40px; padding-top: 20px; border-top: 1px dashed #334155; }
+        .btn-export { background: #10b981; }
+        .btn-export:hover { background: #059669; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>HACKATHON DE TI 2026/2</h1>
+        <p class="subtitle">Projeto de Extensão — Faculdade Anhanguera</p>
+        
+        <form id="formInscricao">
+            <label for="nome">Nome Completo:</label>
+            <input type="text" id="nome" required placeholder="Digite seu nome completo">
+
+            <label for="ra">RA (Registro Acadêmico):</label>
+            <input type="text" id="ra" required placeholder="Ex: 12345678">
+
+            <label for="curso">Curso:</label>
+            <select id="curso" required>
+                <option value="">Selecione...</option>
+                <option value="ADS">Análise e Desenvolvimento de Sistemas (ADS)</option>
+                <option value="SI">Sistemas de Informação</option>
+                <option value="GTI">Gestão da Tecnologia da Informação</option>
+            </select>
+
+            <label for="ods">Desafio ODS Escolhido:</label>
+            <select id="ods" required>
+                <option value="">Selecione a área do ODS...</option>
+                <option value="ODS 4 - Educação de Qualidade">ODS 4 — Educação de Qualidade (Apoio Escolar / Inclusão Digital)</option>
+                <option value="ODS 8 - Trabalho Decente">ODS 8 — Trabalho Decente (Sistemas para Pequenos Negócios/ONGs)</option>
+                <option value="ODS 9 - Indústria & Inovação">ODS 9 — Indústria, Inovação e Infraestrutura (Serviços Urbanos)</option>
+                <option value="ODS 11 - Comunidades Sustentáveis">ODS 11 — Cidades e Comunidades Sustentáveis</option>
+                <option value="ODS 12 - Consumo Responsável">ODS 12 — Consumo Responsável (Combate ao Desperdício)</option>
+            </select>
+
+            <label for="parceiro">Instituição / Comunidade Parceira Atendida:</label>
+            <input type="text" id="parceiro" required placeholder="Nome da ONG, Escola Pública ou Associação">
+
+            <button type="submit">Enviar Inscrição</button>
+        </form>
+
+        <div class="admin-section">
+            <h3 style="margin: 0; color: #94a3b8; font-size: 1rem;">Área do Professor / Administrador</h3>
+            <button type="button" class="btn-export" onclick="exportarTXT()">Baixar Inscrições (.TXT)</button>
+        </div>
+    </div>
+
+    <script>
+        // Salvar Inscrição no Banco de Dados Local (LocalStorage)
+        document.getElementById('formInscricao').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const novaInscricao = {
+                data: new Date().toLocaleString('pt-BR'),
+                nome: document.getElementById('nome').value,
+                ra: document.getElementById('ra').value,
+                curso: document.getElementById('curso').value,
+                ods: document.getElementById('ods').value,
+                parceiro: document.getElementById('parceiro').value
+            };
+
+            let inscricoes = JSON.parse(localStorage.getItem('hackathon_inscricoes') || '[]');
+            inscricoes.push(novaInscricao);
+            localStorage.setItem('hackathon_inscricoes', JSON.stringify(inscricoes));
+
+            alert('Inscrição realizada com sucesso!');
+            this.reset();
+        });
+
+        // Exportar Base de Dados para TXT
+        function exportarTXT() {
+            let inscricoes = JSON.parse(localStorage.getItem('hackathon_inscricoes') || '[]');
+            if (inscricoes.length === 0) {
+                alert('Nenhuma inscrição encontrada.');
+                return;
+            }
+
+            let conteudoTXT = "=== BASE DE INSCRIÇÕES HACKATHON DE TI ===\n";
+            conteudoTXT += `Gerado em: ${new Date().toLocaleString('pt-BR')}\n\n`;
+
+            inscricoes.forEach((item, index) => {
+                conteudoTXT += `--- REGISTRO #${index + 1} ---\n`;
+                conteudoTXT += `Data/Hora: ${item.data}\n`;
+                conteudoTXT += `Nome: ${item.nome}\n`;
+                conteudoTXT += `RA: ${item.ra}\n`;
+                conteudoTXT += `Curso: ${item.curso}\n`;
+                conteudoTXT += `ODS: ${item.ods}\n`;
+                conteudoTXT += `Parceiro: ${item.parceiro}\n\n`;
+            });
+
+            const blob = new Blob([conteudoTXT], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `inscricoes_hackathon_${new Date().toISOString().slice(0,10)}.txt`;
+            link.click();
+        }
+    </script>
+</body>
+</html>
