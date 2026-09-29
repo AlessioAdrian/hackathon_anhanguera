@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscrição Hackathon TI — Anhanguera</title>
+    <title>Inscrição Hackathon TI — Anhanguera Osasco</title>
     <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkhhY2thdGhvbiBUSSBBbmhhbmd1ZXJhIiwKICAic2hvcnRfbmFtZSI6ICJIYWNrYXRob25USSIsCiAgInN0YXJ0X3VybCI6ICIuIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMGYxNzJhIiwKICAidGhlbWVfY29sb3IiOiAiI2Y5NzMxNiIKfQ==">
     <style>
         :root { --primary: #f97316; --bg: #0f172a; --card: #1e293b; --text: #f8fafc; }
         body { font-family: 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
         .container { max-width: 650px; margin: 0 auto; background: var(--card); padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border-top: 5px solid var(--primary); }
+        .logo-container { text-align: center; margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; }
+        .logo-container img { max-width: 200px; }
         h1 { font-size: 1.6rem; margin-bottom: 5px; color: #fff; text-align: center; }
         p.subtitle { text-align: center; color: #94a3b8; font-size: 0.9rem; margin-bottom: 25px; }
         label { display: block; margin-top: 15px; font-weight: 600; font-size: 0.9rem; color: #cbd5e1; }
-        input, select, textarea { width: 100%; padding: 12px; margin-top: 6px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box; font-size: 0.95rem; }
+        input, select { width: 100%; padding: 12px; margin-top: 6px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #fff; box-sizing: border-box; font-size: 0.95rem; }
         button { width: 100%; background: var(--primary); color: #fff; border: none; padding: 14px; font-weight: bold; border-radius: 6px; margin-top: 25px; cursor: pointer; transition: 0.3s; font-size: 1rem; }
         button:hover { background: #ea580c; }
         .admin-section { margin-top: 40px; padding-top: 20px; border-top: 1px dashed #334155; }
@@ -22,14 +24,19 @@
 </head>
 <body>
     <div class="container">
+        <!-- Logomarca da Anhanguera -->
+        <div class="logo-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Anhanguera_Educacional_logo.svg/1200px-Anhanguera_Educacional_logo.svg.png" alt="Logo Anhanguera">
+        </div>
+        
         <h1>HACKATHON DE TI 2026/2</h1>
-        <p class="subtitle">Projeto de Extensão — Faculdade Anhanguera</p>
+        <p class="subtitle">Projeto de Extensão — Faculdade Anhanguera Osasco</p>
         
         <form id="formInscricao">
             <label for="nome">Nome Completo:</label>
-            <input type="text" id="nome" required placeholder="Digite seu nome completo">
+            <input type="text" id="nome" required placeholder="Introduza o nome completo">
 
-            <label for="ra">RA (Registro Acadêmico):</label>
+            <label for="ra">RA (Registo Académico):</label>
             <input type="text" id="ra" required placeholder="Ex: 12345678">
 
             <label for="curso">Curso:</label>
@@ -43,11 +50,11 @@
             <label for="ods">Desafio ODS Escolhido:</label>
             <select id="ods" required>
                 <option value="">Selecione a área do ODS...</option>
-                <option value="ODS 4 - Educação de Qualidade">ODS 4 — Educação de Qualidade (Apoio Escolar / Inclusão Digital)</option>
-                <option value="ODS 8 - Trabalho Decente">ODS 8 — Trabalho Decente (Sistemas para Pequenos Negócios/ONGs)</option>
-                <option value="ODS 9 - Indústria & Inovação">ODS 9 — Indústria, Inovação e Infraestrutura (Serviços Urbanos)</option>
+                <option value="ODS 4 - Educação de Qualidade">ODS 4 — Educação de Qualidade</option>
+                <option value="ODS 8 - Trabalho Decente">ODS 8 — Trabalho Decente</option>
+                <option value="ODS 9 - Indústria & Inovação">ODS 9 — Indústria, Inovação e Infraestrutura</option>
                 <option value="ODS 11 - Comunidades Sustentáveis">ODS 11 — Cidades e Comunidades Sustentáveis</option>
-                <option value="ODS 12 - Consumo Responsável">ODS 12 — Consumo Responsável (Combate ao Desperdício)</option>
+                <option value="ODS 12 - Consumo Responsável">ODS 12 — Consumo Responsável</option>
             </select>
 
             <label for="parceiro">Instituição / Comunidade Parceira Atendida:</label>
@@ -58,16 +65,16 @@
 
         <div class="admin-section">
             <h3 style="margin: 0; color: #94a3b8; font-size: 1rem;">Área do Professor / Administrador</h3>
-            <button type="button" class="btn-export" onclick="exportarTXT()">Baixar Inscrições (.TXT)</button>
+            <button type="button" class="btn-export" onclick="exportarTXT()">Descarregar Inscrições (.TXT)</button>
         </div>
     </div>
 
     <script>
-        // Salvar Inscrição no Banco de Dados Local (LocalStorage)
+        // Guardar Inscrição na Base de Dados Local (LocalStorage)
         document.getElementById('formInscricao').addEventListener('submit', function(e) {
             e.preventDefault();
             const novaInscricao = {
-                data: new Date().toLocaleString('pt-BR'),
+                data: new Date().toLocaleString('pt-PT'),
                 nome: document.getElementById('nome').value,
                 ra: document.getElementById('ra').value,
                 curso: document.getElementById('curso').value,
@@ -83,19 +90,27 @@
             this.reset();
         });
 
-        // Exportar Base de Dados para TXT
+        // Exportar Base de Dados para TXT com Proteção de Senha
         function exportarTXT() {
+            const senha = prompt("Introduza a senha de administrador para aceder ao relatório:");
+            
+            // Senha definida para si (pode alterar no código se desejar)
+            if (senha !== "professor2026") {
+                alert("Senha incorreta. Acesso negado.");
+                return;
+            }
+
             let inscricoes = JSON.parse(localStorage.getItem('hackathon_inscricoes') || '[]');
             if (inscricoes.length === 0) {
-                alert('Nenhuma inscrição encontrada.');
+                alert('Nenhuma inscrição encontrada na base de dados.');
                 return;
             }
 
             let conteudoTXT = "=== BASE DE INSCRIÇÕES HACKATHON DE TI ===\n";
-            conteudoTXT += `Gerado em: ${new Date().toLocaleString('pt-BR')}\n\n`;
+            conteudoTXT += `Gerado em: ${new Date().toLocaleString('pt-PT')}\n\n`;
 
             inscricoes.forEach((item, index) => {
-                conteudoTXT += `--- REGISTRO #${index + 1} ---\n`;
+                conteudoTXT += `--- REGISTO #${index + 1} ---\n`;
                 conteudoTXT += `Data/Hora: ${item.data}\n`;
                 conteudoTXT += `Nome: ${item.nome}\n`;
                 conteudoTXT += `RA: ${item.ra}\n`;
@@ -107,7 +122,7 @@
             const blob = new Blob([conteudoTXT], { type: 'text/plain;charset=utf-8' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `inscricoes_hackathon_${new Date().toISOString().slice(0,10)}.txt`;
+            link.download = `inscricoes_hackathon_osasco_${new Date().toISOString().slice(0,10)}.txt`;
             link.click();
         }
     </script>
