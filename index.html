@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,8 @@
         body { font-family: 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
         .container { max-width: 650px; margin: 0 auto; background: var(--card); padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border-top: 5px solid var(--primary); }
         .logo-container { text-align: center; margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; }
-        .logo-container img { max-width: 200px; }
+        /* Ajuste do tamanho máximo da logo para encaixar bem no layout */
+        .logo-container img { max-width: 250px; height: auto; }
         h1 { font-size: 1.6rem; margin-bottom: 5px; color: #fff; text-align: center; }
         p.subtitle { text-align: center; color: #94a3b8; font-size: 0.9rem; margin-bottom: 25px; }
         label { display: block; margin-top: 15px; font-weight: 600; font-size: 0.9rem; color: #cbd5e1; }
@@ -24,9 +25,9 @@
 </head>
 <body>
     <div class="container">
-        <!-- Logomarca da Anhanguera -->
+        <!-- Logomarca da Anhanguera apontando para o arquivo local -->
         <div class="logo-container">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Anhanguera_Educacional_logo.svg/1200px-Anhanguera_Educacional_logo.svg.png" alt="Logo Anhanguera">
+            <img src="logo.JPG" alt="Logo Anhanguera Osasco">
         </div>
         
         <h1>HACKATHON DE TI 2026/2</h1>
@@ -36,7 +37,7 @@
             <label for="nome">Nome Completo:</label>
             <input type="text" id="nome" required placeholder="Introduza o nome completo">
 
-            <label for="ra">RA (Registo Académico):</label>
+            <label for="ra">RA (Registro Acadêmico):</label>
             <input type="text" id="ra" required placeholder="Ex: 12345678">
 
             <label for="curso">Curso:</label>
@@ -64,7 +65,7 @@
         </form>
 
         <div class="admin-section">
-            <h3 style="margin: 0; color: #94a3b8; font-size: 1rem;">Área do Professor / Administrador</h3>
+            <h3 style="margin: 0; color: #94a3b8; font-size: 1rem;">Área do Administrador</h3>
             <button type="button" class="btn-export" onclick="exportarTXT()">Descarregar Inscrições (.TXT)</button>
         </div>
     </div>
@@ -74,7 +75,7 @@
         document.getElementById('formInscricao').addEventListener('submit', function(e) {
             e.preventDefault();
             const novaInscricao = {
-                data: new Date().toLocaleString('pt-PT'),
+                data: new Date().toLocaleString('pt-BR'),
                 nome: document.getElementById('nome').value,
                 ra: document.getElementById('ra').value,
                 curso: document.getElementById('curso').value,
@@ -92,9 +93,9 @@
 
         // Exportar Base de Dados para TXT com Proteção de Senha
         function exportarTXT() {
-            const senha = prompt("Introduza a senha de administrador para aceder ao relatório:");
+            const senha = prompt("Introduza a senha de administrador para acessar o relatório:");
             
-            // Senha definida para si (pode alterar no código se desejar)
+            // Senha de administrador
             if (senha !== "professor2026") {
                 alert("Senha incorreta. Acesso negado.");
                 return;
@@ -107,10 +108,10 @@
             }
 
             let conteudoTXT = "=== BASE DE INSCRIÇÕES HACKATHON DE TI ===\n";
-            conteudoTXT += `Gerado em: ${new Date().toLocaleString('pt-PT')}\n\n`;
+            conteudoTXT += `Gerado em: ${new Date().toLocaleString('pt-BR')}\n\n`;
 
             inscricoes.forEach((item, index) => {
-                conteudoTXT += `--- REGISTO #${index + 1} ---\n`;
+                conteudoTXT += `--- REGISTRO #${index + 1} ---\n`;
                 conteudoTXT += `Data/Hora: ${item.data}\n`;
                 conteudoTXT += `Nome: ${item.nome}\n`;
                 conteudoTXT += `RA: ${item.ra}\n`;
