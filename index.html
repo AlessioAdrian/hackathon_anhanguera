@@ -57,6 +57,8 @@
         .regras-texto h3 { color: #fff; margin-top: 20px; font-size: 1.1rem; }
         .regras-texto p, .regras-texto ul { color: #cbd5e1; font-size: 0.95rem; line-height: 1.5; }
         .regras-texto li { margin-bottom: 8px; }
+        .btn-clear { background: #ef4444; margin-top: 10px; }
+        .btn-clear:hover { background: #dc2626; }
     </style>
 </head>
 <body>
@@ -140,7 +142,21 @@
                 fecharModal();
             }
         }
+        function limparBase() {
+            const senha = prompt("Introduza a senha de administrador para LIMPAR os registros:");
+    
+                if (senha !== "professor2026") {
+                    alert("Senha incorreta. Acesso negado.");
+                return;
+        }
 
+    const confirmacao = confirm("ATENÇÃO: Tem certeza de que deseja apagar TODAS as inscrições cadastradas? Esta ação não pode ser desfeita.");
+    
+    if (confirmacao) {
+        localStorage.removeItem('hackathon_inscricoes');
+        alert("Base de dados limpa com sucesso!");
+    }
+}
         // Guardar Inscrição na Base de Dados Local (LocalStorage)
         document.getElementById('formInscricao').addEventListener('submit', function(e) {
             e.preventDefault();
