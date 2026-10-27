@@ -48,7 +48,7 @@
         .btn-export { background: #10b981; }
         .btn-export:hover { background: #059669; }
 
-        /* Modal (Segunda Página) */
+        /* Modal (Regras) */
         .modal { display: none; position: fixed; z-index: 10; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
         .modal-content { background-color: var(--card); margin: 5% auto; padding: 30px; border: 1px solid #334155; border-radius: 12px; width: 90%; max-width: 600px; max-height: 80vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .modal-title { color: var(--primary); border-bottom: 1px solid #334155; padding-bottom: 10px; margin-top: 0; }
@@ -87,19 +87,6 @@
                 <option value="GTI">Gestão da Tecnologia da Informação</option>
             </select>
 
-            <label for="ods">Desafio ODS Escolhido:</label>
-            <select id="ods" required>
-                <option value="">Selecione a área do ODS...</option>
-                <option value="ODS 4 - Educação de Qualidade">ODS 4 — Educação de Qualidade</option>
-                <option value="ODS 8 - Trabalho Decente">ODS 8 — Trabalho Decente</option>
-                <option value="ODS 9 - Indústria & Inovação">ODS 9 — Indústria, Inovação e Infraestrutura</option>
-                <option value="ODS 11 - Comunidades Sustentáveis">ODS 11 — Cidades e Comunidades Sustentáveis</option>
-                <option value="ODS 12 - Consumo Responsável">ODS 12 — Consumo Responsável</option>
-            </select>
-
-            <label for="parceiro">Instituição / Comunidade Parceira Atendida:</label>
-            <input type="text" id="parceiro" required placeholder="Nome da ONG, Escola Pública ou Associação">
-
             <button type="submit" class="btn-submit">Enviar Inscrição</button>
         </form>
 
@@ -109,7 +96,7 @@
         </div>
     </div>
 
-    <!-- Janela Modal das Regras (Segunda Página) -->
+    <!-- Janela Modal das Regras -->
     <div id="modalRegras" class="modal">
         <div class="modal-content">
             <h2 class="modal-title">Orientações do Hackathon</h2>
@@ -122,21 +109,12 @@
                 <ul>
                     <li><strong>Plan (Planejar):</strong> Identificar o problema da comunidade e planejar a solução tecnológica.</li>
                     <li><strong>Do (Fazer):</strong> Desenvolver o protótipo ou aplicação.</li>
-                    <li><strong>Check (Checar):</strong> Validar a solução com a instituição parceira.</li>
+                    <li><strong>Check (Checar):</strong> Validar a solução proposta.</li>
                     <li><strong>Act (Agir):</strong> Realizar ajustes finais e documentar os resultados.</li>
                 </ul>
 
-                <h3>3. Eixos Temáticos (ODS da ONU)</h3>
-                <ul>
-                    <li><strong>ODS 4:</strong> Educação de Qualidade (Sistemas para escolas, inclusão digital).</li>
-                    <li><strong>ODS 8:</strong> Trabalho Decente e Crescimento Econômico (Softwares para pequenos comércios/ONGs).</li>
-                    <li><strong>ODS 9:</strong> Indústria, Inovação e Infraestrutura (Serviços urbanos).</li>
-                    <li><strong>ODS 11:</strong> Cidades e Comunidades Sustentáveis (Mobilidade, gestão de resíduos).</li>
-                    <li><strong>ODS 12:</strong> Consumo e Produção Responsáveis (Combate ao desperdício).</li>
-                </ul>
-
-                <h3>4. Avaliação e Critérios</h3>
-                <p>Os projetos serão avaliados pela banca com base na <strong>Inovação</strong>, <strong>Impacto Social na Comunidade Atendida</strong>, <strong>Aplicabilidade Prática (Funcionalidade)</strong> e correta documentação do <strong>Ciclo PDCA</strong>.</p>
+                <h3>3. Avaliação e Critérios</h3>
+                <p>Os projetos serão avaliados pela banca com base na <strong>Inovação</strong>, <strong>Impacto Social</strong>, <strong>Aplicabilidade Prática (Funcionalidade)</strong> e correta documentação do <strong>Ciclo PDCA</strong>.</p>
             </div>
             <button class="close-btn" onclick="fecharModal()">Fechar Regras</button>
         </div>
@@ -168,9 +146,7 @@
                 data: new Date().toLocaleString('pt-BR'),
                 nome: document.getElementById('nome').value,
                 ra: document.getElementById('ra').value,
-                curso: document.getElementById('curso').value,
-                ods: document.getElementById('ods').value,
-                parceiro: document.getElementById('parceiro').value
+                curso: document.getElementById('curso').value
             };
 
             let inscricoes = JSON.parse(localStorage.getItem('hackathon_inscricoes') || '[]');
@@ -205,9 +181,7 @@
                 conteudoTXT += `Data/Hora: ${item.data}\n`;
                 conteudoTXT += `Nome: ${item.nome}\n`;
                 conteudoTXT += `RA: ${item.ra}\n`;
-                conteudoTXT += `Curso: ${item.curso}\n`;
-                conteudoTXT += `ODS: ${item.ods}\n`;
-                conteudoTXT += `Parceiro: ${item.parceiro}\n\n`;
+                conteudoTXT += `Curso: ${item.curso}\n\n`;
             });
 
             const blob = new Blob([conteudoTXT], { type: 'text/plain;charset=utf-8' });
